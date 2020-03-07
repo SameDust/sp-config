@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: zuul
+    
+server:
+  port: 3001
+  
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka
+#zuul不推荐重试，如需要，需要自己开启
+zuul:
+  retryable: true
+  
+#**代表下级以及所有子级 ,可不写，会自动去eureka中拉取注册表
+#  routes:
+#    item-service: /item-service/**
+#   user-service: /user-service/**
+#    order-service: /order-service/**
+
+#zuul中默认包含ribbon可使用熔断
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 1000
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 1
+
+#zuul + hystrix 降级
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 500
