@@ -1,6 +1,11 @@
 spring:
   application:
     name: zuul
+  rabbitmq:
+    host: 192.168.64.129
+    port: 5672
+    username: admin
+    password: admin
     
 server:
   port: 3001
@@ -9,24 +14,24 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka
-#zuul不推荐重试，如需要，需要自己开启
+#zuul涓嶆帹鑽愰噸璇曪紝濡傞渶瑕侊紝闇�瑕佽嚜宸卞紑鍚�
 zuul:
   retryable: true
   
-#**代表下级以及所有子级 ,可不写，会自动去eureka中拉取注册表
+#**浠ｈ〃涓嬬骇浠ュ強鎵�鏈夊瓙绾� ,鍙笉鍐欙紝浼氳嚜鍔ㄥ幓eureka涓媺鍙栨敞鍐岃〃
 #  routes:
 #    item-service: /item-service/**
 #   user-service: /user-service/**
 #    order-service: /order-service/**
 
-#zuul中默认包含ribbon可使用熔断
+#zuul涓粯璁ゅ寘鍚玶ibbon鍙娇鐢ㄧ啍鏂�
 ribbon:
   ConnectTimeout: 1000
   ReadTimeout: 1000
   MaxAutoRetriesNextServer: 1
   MaxAutoRetries: 1
 
-#zuul + hystrix 降级
+#zuul + hystrix 闄嶇骇
 hystrix:
   command:
     default:
